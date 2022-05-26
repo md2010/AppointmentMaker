@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "1067189762660",
+    "firebase_url": "https://makeappointment-70b69-default-rtdb.firebaseio.com",
+    "project_id": "makeappointment-70b69",
+    "storage_bucket": "makeappointment-70b69.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067189762660:android:8e777b4463272f60047d71",
+        "android_client_info": {
+          "package_name": "com.example.makeappointment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1067189762660-gkpl7aft21heqkcofo84i911nptjrqos.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvsceKMW_RR0anmqsWqNwg0_Pkzbmcey8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1067189762660-gkpl7aft21heqkcofo84i911nptjrqos.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067189762660:android:de547bd557cabd2c047d71",
+        "android_client_info": {
+          "package_name": "com.example.makeappointment.ui.home"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1067189762660-gkpl7aft21heqkcofo84i911nptjrqos.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvsceKMW_RR0anmqsWqNwg0_Pkzbmcey8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1067189762660-gkpl7aft21heqkcofo84i911nptjrqos.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

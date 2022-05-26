@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/homeFragment">
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.makeappointment.ui.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.example.makeappointment.ui.new_appointment.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/action_calendarFragment_to_appointmentsListFragment"
+            app:destination="@id/appointmentsListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.makeappointment.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/logInFragment"
+        android:name="com.example.makeappointment.ui.log_in.LogInFragment"
+        android:label="fragment_log_in"
+        tools:layout="@layout/fragment_log_in" />
+    <fragment
+        android:id="@+id/appointmentsListFragment"
+        android:name="com.example.makeappointment.ui.new_appointment.AppointmentsListFragment"
+        android:label="fragment_appointments_list"
+        tools:layout="@layout/fragment_appointments_list" >
+        <action
+            android:id="@+id/action_appointmentsListFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
+        <argument android:name="date"
+            app:argType="integer[]" />
+    </fragment>
+</navigation>
