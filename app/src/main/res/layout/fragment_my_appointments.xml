@@ -11,34 +11,37 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tvDate"
+            android:id="@+id/tvMy"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:text="@string/my"
             android:textSize="30dp"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></TextView>
+            app:layout_constraintTop_toTopOf="parent">
+        </TextView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recView"
+            android:id="@+id/recViewMyAppointments"
             android:layout_width="match_parent"
             android:layout_height="500dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvDate" />
+            app:layout_constraintTop_toBottomOf="@id/tvMy" />
 
         <Button
-            android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
+            android:id="@+id/btnHome"
+            android:layout_width="100dp"
+            android:layout_height="70dp"
             android:layout_marginTop="30dp"
-            android:text="@string/back"
+            android:text="@string/home"
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recView"></Button>
+            app:layout_constraintTop_toBottomOf="@+id/recViewMyAppointments">
+        </Button>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

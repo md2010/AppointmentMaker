@@ -1,15 +1,17 @@
 <resources>
-    <string name="app_name">MakeAppointment</string>
+    <string name="app_name">Appointment maker</string>
     <string name="google_maps_key">AIzaSyAuICTmo8WZnx9kxFfHnmT4iAsRAeeKCTc</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="pick_date">Select date on calendar to see available appointments</string>
+    <string name="pick_date">Pick a date on calendar to see available appointments</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="make_appointment">Make Appointment</string>
     <string name="log_out">Log Out</string>
     <string name="my_app">My Appointments</string>
-    <string name="username">Username: </string>
+    <string name="email">Email: </string>
     <string name="password">Password: </string>
     <string name="log_in">Log In</string>
     <string name="back">Back on calendar</string>
+    <string name="my">My Appointments</string>
+    <string name="home">HOME</string>
 </resources>

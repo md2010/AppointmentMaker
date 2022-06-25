@@ -5,26 +5,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.makeappointment.R
+import com.example.makeappointment.data.repository.AppointmentRepository
+import com.example.makeappointment.data.repository.AppointmentRepositoryImpl
+import com.example.makeappointment.data.repository.UserRepository
+import com.example.makeappointment.data.repository.UserRepositoryImpl
 import com.example.makeappointment.databinding.FragmentHomeBinding
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import com.example.makeappointment.di.AppointmentRepositoryFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.example.makeappointment.ui.new_appointment.CalendarFragment
-import com.google.android.material.tabs.TabLayout
+import com.google.android.gms.maps.*
 
 class HomeFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var map : GoogleMap
     private var secondClick = 0
+    private val userRepository : UserRepository = UserRepositoryImpl()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +35,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
 
     private fun setUpUI() {
         val mapFragment =  childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        binding.btnLocation.setOnClickListener({
+        binding.btnLocation.setOnClickListener {
             if (mapFragment != null) {
                 childFragmentManager.beginTransaction().show(mapFragment).commit()
                 binding.btnMakeAppointment.visibility = View.INVISIBLE
@@ -51,26 +49,39 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                     binding.btnMyAppoinmtments.visibility = View.VISIBLE
                 };
             }
-        })
+        }
         if (mapFragment != null) {
             childFragmentManager.beginTransaction().hide(mapFragment).commit()
         };
         mapFragment?.getMapAsync(this)
 
-        binding.btnMakeAppointment.setOnClickListener{ showNewAppointmentFragment() }
+        binding.btnMakeAppointment.setOnClickListener{ showCalendarFragment() }
+        binding.btnLogOut.setOnClickListener { logOut() }
+        binding.btnMyAppoinmtments.setOnClickListener { showMyAppointmentsFragment() }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         val osijek = LatLng(45.55111, 18.69389)
-        map.addMarker(MarkerOptions().position(osijek).title("Marker in Osijek"))
-        map.mapType = GoogleMap.MAP_TYPE_SATELLITE
+        map.addMarker(MarkerOptions().position(osijek).title("Doctor's location"))
+        map.mapType = GoogleMap.MAP_TYPE_NORMAL
         map.uiSettings.isZoomControlsEnabled = true
         map.moveCamera(CameraUpdateFactory.newLatLng(osijek))
     }
 
-    private fun showNewAppointmentFragment() {
+    private fun logOut() {
+        userRepository.logOut()
+        val action = HomeFragmentDirections.actionHomeFragmentToLogInFragment()
+        findNavController().navigate(action)
+    }
+
+    private fun showCalendarFragment() {
         val action = HomeFragmentDirections.actionHomeFragmentToCalendarFragment()
+        findNavController().navigate(action)
+    }
+
+    private fun showMyAppointmentsFragment() {
+        val action = HomeFragmentDirections.actionHomeFragmentToMyAppointmentsFragment()
         findNavController().navigate(action)
     }
 
