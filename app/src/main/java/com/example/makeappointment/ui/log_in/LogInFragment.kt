@@ -1,21 +1,21 @@
 package com.example.makeappointment.ui.log_in
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.makeappointment.data.repository.UserRepository
 import com.example.makeappointment.data.repository.UserRepositoryImpl
 import com.example.makeappointment.databinding.FragmentLogInBinding
 
 class LogInFragment : Fragment() {
 
     private lateinit var binding: FragmentLogInBinding
-    private val userRepository : UserRepository = UserRepositoryImpl()
+    private val userRepository : UserRepositoryImpl = UserRepositoryImpl()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -26,19 +26,33 @@ class LogInFragment : Fragment() {
     }
 
     private fun setUpUI() {
-        val email = binding.etUserName.text.toString()
-        val password = binding.etPassword.text.toString()
-        binding.btnLogIn.setOnClickListener(View.OnClickListener { checkLogIn(email, password) })
+        binding.btnLogIn.setOnClickListener { checkLogIn() }
     }
 
-    private fun checkLogIn(email: String, password: String) {
-        if(userRepository.logIn(email, password)) {
-            Toast.makeText(this.context, "Login Successful..", Toast.LENGTH_SHORT).show()
-            val action = LogInFragmentDirections.actionLogInFragmentToHomeFragment()
-            findNavController().navigate(action)
-        } else {
-            Toast.makeText(this.context, "Login Failed..", Toast.LENGTH_SHORT).show()
-        }
+    private fun checkLogIn() {
+        val e = binding.etUserName.text.toString()
+            userRepository.logIn(e, object : MyOnCallback {
+                override fun onCallback(email: String?, password: String?) {
+                    val p = binding.etPassword.text.toString()
+                    if(e == email && p == password){
+                        Log.d(TAG, "success")
+                        logInSuccess()
+                        return
+                    } else {
+                        Log.d(TAG, "failure")
+                        logInFailure()
+                    }
+                }
+            })
+    }
+
+    private fun logInSuccess() {
+        val action = LogInFragmentDirections.actionLogInFragmentToHomeFragment()
+        findNavController().navigate(action)
+    }
+
+    private fun logInFailure() {
+        Toast.makeText(this.context, "Log In Failed", Toast.LENGTH_SHORT).show()
     }
 
     companion object {
@@ -48,4 +62,5 @@ class LogInFragment : Fragment() {
             return LogInFragment()
         }
     }
+
 }

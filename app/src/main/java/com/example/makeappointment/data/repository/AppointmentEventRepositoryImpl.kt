@@ -61,8 +61,8 @@ class AppointmentEventRepositoryImpl : AppointmentEventRepository {
     override fun delete(){
         dbReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (appleSnapshot in dataSnapshot.children) {
-                    appleSnapshot.ref.removeValue()
+                for (s in dataSnapshot.children) {
+                    s.ref.removeValue()
                 }
             }
 

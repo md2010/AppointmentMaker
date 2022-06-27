@@ -1,25 +1,17 @@
 package com.example.makeappointment.data.repository
 
-import android.R.attr.password
 import android.content.ContentValues.TAG
-import android.content.Intent
 import android.util.Log
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
-import androidx.core.content.PackageManagerCompat.LOG_TAG
 import com.example.makeappointment.model.User
-import com.example.makeappointment.ui.MainActivity
-import com.example.makeappointment.ui.log_in.LogInFragment
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.FirebaseNetworkException
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.example.makeappointment.ui.log_in.MyOnCallback
+import com.google.firebase.database.*
 
 
 class UserRepositoryImpl : UserRepository {
 
-    private val dbReference : DatabaseReference = FirebaseDatabase.getInstance().getReference("users")
+    val dbReference : DatabaseReference = FirebaseDatabase.getInstance().getReference("users")
     var authorizedUser : String = ""
+    var email : String = ""
 
     override fun loadData() {
         val availableUsers: List<User> = mutableListOf(
@@ -30,30 +22,35 @@ class UserRepositoryImpl : UserRepository {
         )
         availableUsers.forEach {
             val key = dbReference.child("users").push().key
-            it.uuid = key
+            if (key != null) {
+                it.uuid = key
+            }
             if (key != null) {
                 dbReference.child("users").child(key).setValue(it)
             }
         }
     }
 
-    override fun logIn(email : String, password : String) : Boolean {
-        var e: String = ""
-        var p: String = ""
-        var id : String = ""
-        dbReference.child(email).get().addOnSuccessListener {
-            if (it.exists()) {
-                e = it.child("email").value.toString()
-                p = it.child("password").value.toString()
-                id = it.child("uuid").value.toString()
+    override fun logIn(e : String, callback : MyOnCallback) {
+        val listener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(ds in snapshot.children) {
+                    for (s: DataSnapshot in ds.children) {
+                        val user = s.getValue(User::class.java)
+                        if (user != null) {
+                            if(user.email.equals(e)) {
+                                callback.onCallback(user.email, user.password)
+                                break
+                            }
+                        }
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.d(TAG, "Can't fetch data.")
             }
         }
-        if (e == email && password == p) {
-            authorizedUser = id
-            return true
-        } else {
-            return false
-        }
+        dbReference.addListenerForSingleValueEvent(listener)
     }
 
     override fun logOut() {
